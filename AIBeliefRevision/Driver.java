@@ -18,18 +18,32 @@ public class Driver {
       
       userInput = scnr.nextLine().trim();
       
-      int numORs = 0;
-      int numNOTs = 0;
-      for(int i=0; i<userInput.length();i++) {
-    	  Character letter = userInput.charAt(i);
-    	  System.out.println("letter " +letter);
-    	  if(letter.equals('|')) {
-    		  numORs++;
-    	  }
-    	  if(letter.equals('!')) {
-    		  numNOTs++;
-    	  }
-      }
+        String[] stringArray = userInput.split("^");
+        
+        for (String s : stringArray) {
+          int numORs = 0;
+          int numNOTs = 0;
+
+          for(int i=0; i<userInput.length();i++) {
+            Character letter = userInput.charAt(i);
+            System.out.println("letter " +letter);
+            if(letter.equals('|')) {
+              numORs++;
+            }
+
+            if(letter.equals('!')) {
+              numNOTs++;
+            }
+          }
+          
+          if (numORs == 0) {
+            SingleLiteralSentence sls = new SingleLiteralSentence(userInput);
+          } else if (numORs) == 1) {
+            BinarySentence bs = new BinarySentence(userInput);
+          } else if (numORs == 2) {
+            ThreeLiteralSentence tls = new ThreeLiteralSentence(userInput);
+          }
+        }
       
       //Error checking for CNF form somehow
     }
