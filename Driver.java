@@ -18,6 +18,22 @@ public class Driver {
       System.out.println("  & : AND");
       System.out.println("Or enter the command 'END' to see the final belief base.");
       
+      BeliefADT belief = (BeliefADT)new BinarySentence("!p|!q");
+      BinarySentence bs = new BinarySentence("!p|!q");
+      BeliefBaseADT bb = new BeliefBaseADT();
+//      System.out.println("1 " + bs.getNotFirstLiteral());
+//      System.out.println("2 " + bs.getFirstLiteral());
+//      System.out.println("3 " + bs.getNotSecondLiteral());
+//      System.out.println("4 " + bs.getSecondLiteral());
+//      System.out.println(bb.uniqueLiteralsHelper(belief, ""));
+      
+//      bb.add(new SingleLiteralSentence("r"));
+//      bb.add(new SingleLiteralSentence("q"));
+//      bb.truthTableCheck(belief);
+      
+      
+      
+      
       userInput = scnr.nextLine().trim();
       
         String[] stringArray = userInput.split("&");
@@ -38,12 +54,13 @@ public class Driver {
             }
           }
           
+          BeliefADT b;
           if (numORs == 0) {
-            SingleLiteralSentence sls = new SingleLiteralSentence(userInput);
+            b = new SingleLiteralSentence(userInput);
           } else if (numORs == 1) {
-            BinarySentence bs = new BinarySentence(userInput);
+            b = new BinarySentence(userInput);
           } else if (numORs == 2) {
-            ThreeLiteralSentence tls = new ThreeLiteralSentence(userInput);
+            b = new ThreeLiteralSentence(userInput);
           }
         }
       
