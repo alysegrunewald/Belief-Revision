@@ -1,4 +1,5 @@
 
+
 public class SingleLiteralSentence extends BeliefADT{
   private boolean notLiteral;
   private char literal;
@@ -27,3 +28,4 @@ public class SingleLiteralSentence extends BeliefADT{
   }
 
 }
+
