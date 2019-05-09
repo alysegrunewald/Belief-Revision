@@ -11,7 +11,7 @@ public class ThreeLiteralSentence extends BeliefADT{
     super();
     // TODO Auto-generated constructor stub
     
-    String[] seperate = string.split("|");
+    String[] seperate = string.split("\\|");
     SingleLiteralSentence l = new SingleLiteralSentence(seperate[0]);
     this.notFirstLiteral = l.getNotLiteral();
     this.firstLiteral = l.getLiteral();
