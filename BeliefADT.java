@@ -1,7 +1,7 @@
 
 public class BeliefADT {
   
-  public BeliefADT() {
+  public BeliefADT () {
     
   }
 }
