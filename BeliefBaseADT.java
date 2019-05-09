@@ -19,7 +19,30 @@ public class BeliefBaseADT<BeliefADT> {
    
    int numUnique = uniqueLiterals.length();
    
-   String[][] truthTable = new String[numUnique + beliefBase.size() + 1][2^numUnique];
+   String[][] truthTable = new String[numUnique + beliefBase.size() + 1][(int)(Math.pow(2, numUnique)+1)];
+   
+   int comboNum = ((int)(Math.pow(2, numUnique)))/2;
+   String comboVar = "0";
+   for (int i = 0; i < uniqueLiterals.length(); i++) {
+     truthTable[i][0] = Character.toString(uniqueLiterals.charAt(i));
+     int counter = 0;
+     for (int j = 1; j < truthTable[i].length; j++) {
+       truthTable[i][j] = comboVar;
+       counter++;
+       if (counter == comboNum) {
+         if (comboVar.equals("0")) {
+           comboVar = "1";
+         } else {
+           comboVar = "0";
+         }
+         counter = 0;
+       }
+     }
+     comboNum = comboNum/2;
+   }
+   
+   
+   
    
     
    return true;
@@ -59,6 +82,18 @@ public class BeliefBaseADT<BeliefADT> {
     }
     
     return uniqueLiterals;
+  }
+  
+  public void printTruthTable(String[][] truthTable) {
+    for(int i = 0; i < truthTable.length; i++) {
+      for(int j = 0; j < truthTable[i].length; j++){
+          System.out.print(truthTable[i][j]+"~");
+          if(j < truthTable[i].length - 1) {
+            System.out.print(" ");
+          }
+      }
+      System.out.println();
+  }
   }
   
   public void add(BeliefADT belief) {
