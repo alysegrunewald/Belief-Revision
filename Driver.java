@@ -4,21 +4,21 @@ public class Driver {
   
   public static void main(String[] args) {
     
-    System.out.println("------ Welcome to Belief Revision! ------");
-    System.out.println("By entering new beliefs, your belief base will be appropriately revised based on the new information provided.");
-    System.out.println("--------------------------------------------------------\n");
+//    System.out.println("------ Welcome to Belief Revision! ------");
+//    System.out.println("By entering new beliefs, your belief base will be appropriately revised based on the new information provided.");
+//    System.out.println("--------------------------------------------------------\n");
 
     Scanner scnr = new Scanner(System.in);
     String userInput = null;
     while (userInput != "END") {
-      System.out.println("Please enter a new belief in Conjunctive Normal Form, using the following logic symbols.");
-      System.out.println("  Lowercase letter(i.e. p,q,r) : Literal");
-      System.out.println("  ! : NOT");
-      System.out.println("  | : OR");
-      System.out.println("  & : AND");
-      System.out.println("Or enter the command 'END' to see the final belief base.");
+//      System.out.println("Please enter a new belief in Conjunctive Normal Form, using the following logic symbols.");
+//      System.out.println("  Lowercase letter(i.e. p,q,r) : Literal");
+//      System.out.println("  ! : NOT");
+//      System.out.println("  | : OR");
+//      System.out.println("  & : AND");
+//      System.out.println("Or enter the command 'END' to see the final belief base.");
       
-      BeliefADT belief = (BeliefADT)new BinarySentence("!p|!q");
+      BeliefADT belief = (BeliefADT)new SingleLiteralSentence("s");
       BinarySentence bs = new BinarySentence("!p|!q");
       BeliefBaseADT bb = new BeliefBaseADT();
 //      System.out.println("1 " + bs.getNotFirstLiteral());
@@ -27,10 +27,9 @@ public class Driver {
 //      System.out.println("4 " + bs.getSecondLiteral());
 //      System.out.println(bb.uniqueLiteralsHelper(belief, ""));
       
-//      bb.add(new SingleLiteralSentence("r"));
-//      bb.add(new SingleLiteralSentence("q"));
-//      bb.truthTableCheck(belief);
-      
+      bb.add(new BinarySentence("q|r"));
+      bb.add(new SingleLiteralSentence("p"));
+      System.out.println(bb.truthTableCheck(belief));
       
       
       
