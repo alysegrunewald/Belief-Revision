@@ -15,7 +15,7 @@ public class BeliefBaseADT<BeliefADT> {
    for (BeliefADT b : beliefBase) {
      uniqueLiterals = uniqueLiteralsHelper(b, uniqueLiterals);
    }
-   uniqueLiterals = uniqueLiteralsHelper(newBelief, uniqueLiterals);
+//   uniqueLiterals = uniqueLiteralsHelper(newBelief, uniqueLiterals);
    
    int numUnique = uniqueLiterals.length();
    
@@ -69,8 +69,16 @@ public class BeliefBaseADT<BeliefADT> {
            }
          } 
        }
+       
+       if(truthTable[k][1] == null) {
+         for (int j = 1; j < truthTable[k].length; j++) {
+           truthTable[k][j] = "1";
+         }
+       }
+       
        k++;
        continue;
+       
      } else if(b instanceof BinarySentence) {
        boolean notFirst = ((BinarySentence)b).getNotFirstLiteral();
        String first = Character.toString(((BinarySentence)b).getFirstLiteral());
@@ -79,14 +87,22 @@ public class BeliefBaseADT<BeliefADT> {
 
        truthTable[k][0] = b.toString();
 
-       int row1 = 0;
-       int row2 = 0;
+       int row1 = -1;
+       int row2 = -1;
        for (int i = 0; i < numUnique; i++) {
          if (truthTable[i][0].equals(first)) {
            row1 = i;
          } else if (truthTable[i][0].equals(second)) {
            row2 = i;
          }
+       }
+
+       if (row1 == -1 || row2 == -1) {
+         for(int j = 1; j < truthTable[0].length; j++) {
+           truthTable[k][j] = "1";
+         } 
+         k++;
+         continue;
        }
 
        for (int i = 1; i < truthTable[row1].length; i++) {
@@ -132,9 +148,9 @@ public class BeliefBaseADT<BeliefADT> {
 
        truthTable[k][0] = b.toString();
 
-       int row1 = 0;
-       int row2 = 0;
-       int row3 = 0;
+       int row1 = -1;
+       int row2 = -1;
+       int row3 = -1;
        for (int i = 0; i < numUnique; i++) {
          if (truthTable[i][0].equals(first)) {
            row1 = i;
@@ -143,6 +159,14 @@ public class BeliefBaseADT<BeliefADT> {
          } else if (truthTable[i][0].equals(third)) {
            row3 = i;
          }
+       }
+       
+       if (row1 == -1 || row2 == -1 || row3 == -1) {
+         for(int j = 1; j < truthTable[0].length; j++) {
+           truthTable[k][j] = "1";
+         }
+         k++;
+         continue;
        }
 
        for (int i = 1; i < truthTable[row1].length; i++) {
@@ -213,13 +237,11 @@ public class BeliefBaseADT<BeliefADT> {
      continue;
    }
 
+   printTruthTable(truthTable);
+   
    //Consistency Check
-   int kbCounter1 = 0;
-   int kbCounter2 = 0;
    for(int i = 1; i < truthTable[0].length; i++) {
-     if (truthTable[truthTable.length-1][i].equals("1")) {
-       kbCounter1++;
-       
+     if (truthTable[truthTable.length-1][i].equals("1")) {    
        int tempKbCounter = 0;
        for(int j = numUnique; j < truthTable.length-1; j++) {
          if (truthTable[j][i].equals("1")) {
@@ -227,21 +249,12 @@ public class BeliefBaseADT<BeliefADT> {
          }
        }
        if (tempKbCounter == beliefBase.size()-1) {
-         kbCounter2++;
+         return true;
        }
      }
    }
-
-   printTruthTable(truthTable);
-   
-   System.out.println("***" + kbCounter1 + " " + kbCounter2);
-   
-   if(kbCounter1 == kbCounter2) {
-     return true;
-   } else {
-     this.beliefBase.remove(beliefBase.size()-1);
-     return false;
-   }
+   this.beliefBase.remove(newBelief);
+   return false;
   }
   
   public String uniqueLiteralsHelper(BeliefADT b, String uniqueLiterals) {
