@@ -18,7 +18,7 @@ public class Driver {
 //      System.out.println("  & : AND");
 //      System.out.println("Or enter the command 'END' to see the final belief base.");
       
-      BeliefADT belief = (BeliefADT)new SingleLiteralSentence("s");
+      BeliefADT belief = (BeliefADT)new SingleLiteralSentence("!p");
       BinarySentence bs = new BinarySentence("!p|!q");
       BeliefBaseADT bb = new BeliefBaseADT();
 //      System.out.println("1 " + bs.getNotFirstLiteral());
@@ -30,7 +30,6 @@ public class Driver {
       bb.add(new BinarySentence("q|r"));
       bb.add(new SingleLiteralSentence("p"));
       System.out.println(bb.truthTableCheck(belief));
-      
       
       
       userInput = scnr.nextLine().trim();
