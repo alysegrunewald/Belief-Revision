@@ -12,6 +12,8 @@ public class BeliefRevision {
   public void rank(BeliefBaseADT beliefBase) {
     ArrayList<BeliefADT> beliefs = beliefBase.getBeliefBase();
     String[][] truthTable = beliefBase.truthTable(null);
+    
+//    System.out.println(beliefBase.toString());
 
     for (int i = 0; i < beliefs.size(); i++) {
       beliefs.get(i).setRank(0);
@@ -73,12 +75,14 @@ public class BeliefRevision {
   }
   
   public ArrayList<BeliefADT> contraction(BeliefBaseADT beliefBase, BeliefADT newBelief) {
-    rank(beliefBase);
     ArrayList<BeliefADT> beliefs = beliefBase.getBeliefBase();
     String[][] truthTable = beliefBase.truthTable(newBelief);
     int index = (int)Math.round(Math.log10(truthTable[0].length-1)/Math.log10(2));
     
     ArrayList<String> contradictions = new ArrayList<String>();
+    
+    //Rank of current beliefs
+    rank(beliefBase);
     
     //Find contradictions in belief base from new new belief
     for(int i = 0; i < truthTable.length; i++) {
@@ -90,6 +94,7 @@ public class BeliefRevision {
         }
       }
     }
+    
     //convert contradictions String to contradictions of type BeliefADT
     ArrayList<BeliefADT> contradictions2 = new ArrayList<BeliefADT>();
     for (int i = 0; i < contradictions.size(); i++) {
@@ -132,5 +137,4 @@ public class BeliefRevision {
     
     return beliefs;
   }
-
 }
