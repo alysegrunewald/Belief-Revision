@@ -235,7 +235,9 @@ public class BeliefBaseADT<BeliefADT> {
      k++;
      continue;
    }
-
+   if (newBelief == null) {
+       beliefBase.remove(beliefBase.size()-1);
+   }
    return truthTable;
    
   }
@@ -340,5 +342,6 @@ public class BeliefBaseADT<BeliefADT> {
   
   public void setBeliefBase(ArrayList<BeliefADT> beliefBase) {
     this.beliefBase = beliefBase;
+    System.out.println("!" + this.beliefBase.toString());
   }
 }
