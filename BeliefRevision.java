@@ -85,16 +85,16 @@ public class BeliefRevision {
     rank(beliefBase);
     
     //Find contradictions in belief base from new new belief
-    for(int i = 0; i < truthTable.length; i++) {
+    for(int i = 0; i < truthTable[0].length; i++) {
       if (truthTable[truthTable.length-1][i].equals("1")) {
-        for (int j = index; j < truthTable.length-2; j++) {
+        for (int j = index; j < truthTable.length-1; j++) {
           if (truthTable[j][i].equals("0") && !contradictions.contains(truthTable[j][0])) {
             contradictions.add(truthTable[j][0]);
           }
         }
       }
     }
-    
+    System.out.println(contradictions);
     //convert contradictions String to contradictions of type BeliefADT
     ArrayList<BeliefADT> contradictions2 = new ArrayList<BeliefADT>();
     for (int i = 0; i < contradictions.size(); i++) {
@@ -105,9 +105,9 @@ public class BeliefRevision {
         }
     }
     
-    //Of the of contradicting beliefs, find lowest rank
+    //Of the contradicting beliefs, find lowest rank
     BeliefADT minRank = contradictions2.get(0);
-    for (int i = 1; i < contradictions2.size(); i++) {
+    for (int i = 0; i < contradictions2.size(); i++) {
         if (contradictions2.get(i).getRank() < minRank.getRank()) {
             minRank = contradictions2.get(i);
         }
@@ -115,10 +115,10 @@ public class BeliefRevision {
             int b1 = 0;
             int b2 = 0;
             for (int j = 0; j < beliefs.size(); j++) {
-                if (minRank.equals(beliefs.get(j))) {
+                if (minRank.toString().equals(beliefs.get(j).toString())) {
                     b1 = j;
                 }
-                if (contradictions2.get(i).equals(beliefs.get(j))) {
+                if (contradictions2.get(i).toString().equals(beliefs.get(j).toString())) {
                     b2 = j;
                 }
             }
@@ -127,14 +127,9 @@ public class BeliefRevision {
             }
         }
     }
-    
-    //Remove belief from belief base with lowest rank
-    for (int i = 0; i < beliefs.size(); i++) {
-        if (minRank.equals(beliefs.get(i))) {
-            beliefs.remove(i);
-        }
-    }
-    
+ 
+    beliefs.remove(minRank);
+
     return beliefs;
   }
 }
