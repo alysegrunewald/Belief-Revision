@@ -69,7 +69,7 @@ public class Driver {
         
         BeliefRevision revise = new BeliefRevision();
         while(!beliefBase.consistencyCheck(b)) {
-          beliefBase.setBeliefBase(revise.contraction(beliefBase, b));
+        beliefBase.setBeliefBase(revise.contraction(beliefBase, b));
         }
         
         //Revision
