@@ -9,8 +9,7 @@ public class BeliefBaseADT<BeliefADT> {
     beliefBase = new ArrayList<BeliefADT>();
   }
   
-  public boolean truthTableCheck(BeliefADT newBelief) {
-   int numBeliefs = beliefBase.size();
+  public String[][] truthTable(BeliefADT newBelief) {
    String uniqueLiterals = "";
    for (BeliefADT b : beliefBase) {
      uniqueLiterals = uniqueLiteralsHelper(b, uniqueLiterals);
@@ -237,24 +236,38 @@ public class BeliefBaseADT<BeliefADT> {
      continue;
    }
 
-   printTruthTable(truthTable);
+   return truthTable;
    
-   //Consistency Check
-   for(int i = 1; i < truthTable[0].length; i++) {
-     if (truthTable[truthTable.length-1][i].equals("1")) {    
-       int tempKbCounter = 0;
-       for(int j = numUnique; j < truthTable.length-1; j++) {
-         if (truthTable[j][i].equals("1")) {
-           tempKbCounter++;
-         }
-       }
-       if (tempKbCounter == beliefBase.size()-1) {
-         return true;
-       }
-     }
-   }
-   this.beliefBase.remove(newBelief);
-   return false;
+  }
+  
+  public boolean consistencyCheck(BeliefADT newBelief) {
+    
+    String uniqueLiterals = "";
+    for (BeliefADT b : beliefBase) {
+      uniqueLiterals = uniqueLiteralsHelper(b, uniqueLiterals);
+    }
+//    uniqueLiterals = uniqueLiteralsHelper(newBelief, uniqueLiterals);
+    
+    int numUnique = uniqueLiterals.length();
+    
+    String[][] truthTable = truthTable(newBelief);
+    
+    //Consistency Check
+    for(int i = 1; i < truthTable[0].length; i++) {
+      if (truthTable[truthTable.length-1][i].equals("1")) {    
+        int tempKbCounter = 0;
+        for(int j = numUnique; j < truthTable.length-1; j++) {
+          if (truthTable[j][i].equals("1")) {
+            tempKbCounter++;
+          }
+        }
+        if (tempKbCounter == beliefBase.size()-1) {
+          return true;
+        }
+      }
+    }
+    this.beliefBase.remove(newBelief);
+    return false;
   }
   
   public String uniqueLiteralsHelper(BeliefADT b, String uniqueLiterals) {
@@ -308,5 +321,9 @@ public class BeliefBaseADT<BeliefADT> {
   public void add(BeliefADT belief) {
     this.beliefBase.add(belief);
     return;
+  }
+  
+  public ArrayList<BeliefADT> getBeliefBase() {
+    return this.beliefBase;
   }
 }
