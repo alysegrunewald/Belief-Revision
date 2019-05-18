@@ -73,6 +73,7 @@ public class BeliefRevision {
   }
   
   public ArrayList<BeliefADT> contraction(BeliefBaseADT beliefBase, BeliefADT newBelief) {
+    rank(beliefBase);
     ArrayList<BeliefADT> beliefs = beliefBase.getBeliefBase();
     String[][] truthTable = beliefBase.truthTable(newBelief);
     int index = (int)Math.round(Math.log10(truthTable[0].length-1)/Math.log10(2));
@@ -100,11 +101,36 @@ public class BeliefRevision {
     }
     
     //Of the of contradicting beliefs, find lowest rank
-    
+    BeliefADT minRank = contradictions2.get(0);
+    for (int i = 1; i < contradictions2.size(); i++) {
+        if (contradictions2.get(i).getRank() < minRank.getRank()) {
+            minRank = contradictions2.get(i);
+        }
+        else if (contradictions2.get(i).getRank() == minRank.getRank()) {
+            int b1 = 0;
+            int b2 = 0;
+            for (int j = 0; j < beliefs.size(); j++) {
+                if (minRank.equals(beliefs.get(j))) {
+                    b1 = j;
+                }
+                if (contradictions2.get(i).equals(beliefs.get(j))) {
+                    b2 = j;
+                }
+            }
+            if (b2 < b1) {
+                minRank = contradictions2.get(i); 
+            }
+        }
+    }
     
     //Remove belief from belief base with lowest rank
+    for (int i = 0; i < beliefs.size(); i++) {
+        if (minRank.equals(beliefs.get(i))) {
+            beliefs.remove(i);
+        }
+    }
     
-    return null;
+    return beliefs;
   }
 
 }
