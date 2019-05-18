@@ -89,8 +89,18 @@ public class BeliefRevision {
         }
       }
     }
+    //convert contradictions String to contradictions of type BeliefADT
+    ArrayList<BeliefADT> contradictions2 = new ArrayList<BeliefADT>();
+    for (int i = 0; i < contradictions.size(); i++) {
+        for (int j = 0; j < beliefs.size(); j++) {
+            if (contradictions.get(i).equals(beliefs.get(j).toString())) {
+                contradictions2.add(beliefs.get(j));
+            }
+        }
+    }
     
     //Of the of contradicting beliefs, find lowest rank
+    
     
     //Remove belief from belief base with lowest rank
     
