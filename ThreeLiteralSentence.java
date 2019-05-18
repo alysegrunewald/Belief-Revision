@@ -48,4 +48,22 @@ public class ThreeLiteralSentence extends BeliefADT{
   public char getThirdLiteral() {
     return this.thirdLiteral;
   }
+  
+  public String toString() {
+    if (notFirstLiteral && notSecondLiteral && notThirdLiteral) {
+      return "!" + firstLiteral + "|!" + secondLiteral + "|!" + thirdLiteral;
+    } else if (!notFirstLiteral && notSecondLiteral && notThirdLiteral) {
+      return firstLiteral + "|!" + secondLiteral + "|!" + thirdLiteral;
+    } else if (!notFirstLiteral && !notSecondLiteral && notThirdLiteral) {
+      return firstLiteral + "|" + secondLiteral + "|!" + thirdLiteral;
+    } else if (!notFirstLiteral && notSecondLiteral && !notThirdLiteral) {
+      return firstLiteral + "|!" + secondLiteral + "|" + thirdLiteral;
+    }else if (notFirstLiteral && !notSecondLiteral && notThirdLiteral) {
+      return "!" + firstLiteral + "|" + secondLiteral + "|!" + thirdLiteral;
+    } else if (notFirstLiteral && !notSecondLiteral && !notThirdLiteral) {
+      return "!" + firstLiteral + "|" + secondLiteral + "|" + thirdLiteral;
+    } else {
+      return firstLiteral + "|" + secondLiteral + "|" + thirdLiteral;
+    }
+  }
 }
