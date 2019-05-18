@@ -74,8 +74,25 @@ public class BeliefRevision {
   
   public ArrayList<BeliefADT> contraction(BeliefBaseADT beliefBase, BeliefADT newBelief) {
     ArrayList<BeliefADT> beliefs = beliefBase.getBeliefBase();
+    String[][] truthTable = beliefBase.truthTable(newBelief);
+    int index = (int)Math.round(Math.log10(truthTable[0].length-1)/Math.log10(2));
     
-    for(int i = 0; i < )
+    ArrayList<String> contradictions = new ArrayList<String>();
+    
+    //Find contradictions in belief base from new new belief
+    for(int i = 0; i < truthTable.length; i++) {
+      if (truthTable[truthTable.length-1][i].equals("1")) {
+        for (int j = index; j < truthTable.length-2; j++) {
+          if (truthTable[j][i].equals("0") && !contradictions.contains(truthTable[j][0])) {
+            contradictions.add(truthTable[j][0]);
+          }
+        }
+      }
+    }
+    
+    //Of the of contradicting beliefs, find lowest rank
+    
+    //Remove belief from belief base with lowest rank
     
     return null;
   }
