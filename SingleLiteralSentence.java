@@ -26,6 +26,13 @@ public class SingleLiteralSentence extends BeliefADT{
   public char getLiteral() {
     return this.literal;
   }
+  
+  public String toString() {
+    if (notLiteral == true) {
+      return "!" + literal;
+    } else {
+      return Character.toString(literal);
+    }
+  }
 
 }
-
