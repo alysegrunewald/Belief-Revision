@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 
 public class BeliefRevision {
   
@@ -21,5 +21,25 @@ public class BeliefRevision {
     return null;
   }
 
-}
-
+  public ArrayList<BeliefADT> contraction (ArrayList<BeliefADT> beliefBase, BeliefADT belief) {
+      
+      return beliefBase;
+  }
+  
+  public void rank(ArrayList<BeliefADT> beliefBase) {   
+       int i = 0;
+       for (i = 0; i < beliefBase.size(); i++) {
+           beliefBase.get(i).setRank(i + 1);
+       }
+       
+       for (i = 0; i < beliefBase.size() - 1; i++) {
+           if (entails(beliefBase.get(i), beliefBase.get(i + 1)) == true) {
+               beliefBase.get(i).setRank(beliefBase.get(i + 1).getRank() + 1);
+           }
+       }
+  }
+  
+  public boolean entails(BeliefADT belief1, BeliefADT belief2, tring[][]) {
+      
+      return true;
+  }
