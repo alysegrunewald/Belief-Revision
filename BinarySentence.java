@@ -37,5 +37,17 @@ public class BinarySentence extends BeliefADT{
   public char getSecondLiteral() {
     return this.secondLiteral;
   }
+  
+  public String toString() {
+    if (notFirstLiteral && notSecondLiteral) {
+      return "!" + firstLiteral + "|" + "!" + secondLiteral;
+    } else if (notFirstLiteral && !notSecondLiteral) {
+      return "!" + firstLiteral + "|" + secondLiteral;
+    } else if (!notFirstLiteral && notSecondLiteral) {
+      return firstLiteral + "|" + "!" + secondLiteral;
+    } else {
+      return firstLiteral + "|" + secondLiteral;
+    }
+  }
 
 }
