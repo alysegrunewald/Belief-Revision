@@ -45,7 +45,7 @@ public class BeliefBaseADT<BeliefADT> {
    int k = numUnique;
    //Counter for index in 2d array
    
-   this.add(newBelief);
+   this.beliefBase.add(newBelief);
    for (BeliefADT b : beliefBase) {
      if (b instanceof SingleLiteralSentence) {
        boolean not = ((SingleLiteralSentence)b).getNotLiteral();
@@ -246,8 +246,6 @@ public class BeliefBaseADT<BeliefADT> {
     for (BeliefADT b : beliefBase) {
       uniqueLiterals = uniqueLiteralsHelper(b, uniqueLiterals);
     }
-//    uniqueLiterals = uniqueLiteralsHelper(newBelief, uniqueLiterals);
-    
     int numUnique = uniqueLiterals.length();
     
     String[][] truthTable = truthTable(newBelief);
@@ -315,7 +313,20 @@ public class BeliefBaseADT<BeliefADT> {
           }
       }
       System.out.println();
+    }
   }
+  
+  public String toString() {
+    String string = "{";
+    if (beliefBase.size() > 0) {
+      for (int i = 0; i < beliefBase.size()-1; i++) {
+        string += beliefBase.get(i).toString() + ", ";
+      }
+      string += beliefBase.get(beliefBase.size()-1).toString() + "}";
+    } else {
+      string += "}";
+    }
+    return string;
   }
   
   public void add(BeliefADT belief) {
@@ -325,5 +336,9 @@ public class BeliefBaseADT<BeliefADT> {
   
   public ArrayList<BeliefADT> getBeliefBase() {
     return this.beliefBase;
+  }
+  
+  public void setBeliefBase(ArrayList<BeliefADT> beliefBase) {
+    this.beliefBase = beliefBase;
   }
 }
