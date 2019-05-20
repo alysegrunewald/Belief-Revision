@@ -344,4 +344,17 @@ public class BeliefBaseADT<BeliefADT> {
     this.beliefBase = beliefBase;
     System.out.println("!" + this.beliefBase.toString());
   }
+    public boolean contains(BeliefADT b) {
+      int i = 0;
+      int j = 0;
+      
+      for (i = 0; i < this.beliefBase.size(); i++) {
+          if (b.toString().equals(this.beliefBase.get(i).toString())) {
+              j++;         
+          }
+      }     
+      if (j > 0) { return true;}
+      else {return false;}
+      
+  }
 }
