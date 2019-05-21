@@ -50,7 +50,7 @@ public class BeliefRevision {
 
   public boolean entails(ArrayList<BeliefADT> remainder, String[][] truthTable) {
 
-    boolean entails = false;
+    boolean entails = true;
     int index = (int)Math.round(Math.log10(truthTable[0].length-1)/Math.log10(2));
     int[] beliefIndex = new int[remainder.size()];
 
@@ -60,36 +60,15 @@ public class BeliefRevision {
           beliefIndex[i] = j;
         }
       }
-    }
-
-
-    int counter = 0; 
-    int counter2 = 0;
-    int overallCounter = 0;
-    for(int i = 0; i < beliefIndex.length; i++) {
+    }   
+    for (int i = 0; i < beliefIndex.length; i++) {
       for (int j = 1; j < truthTable[0].length; j++) {
-        if (truthTable[beliefIndex[i]][j].equals("1")) {
-          counter++;
-        }
-      }
-
-      for (i = 1; i < truthTable[0].length; i++) {
-        if (truthTable[truthTable.length-1][i].equals("1")) {
-          counter2++;
-        }
-      }
-
-      if(counter == counter2) {
-        overallCounter++;
+          if (truthTable[beliefIndex[i]][j].equals("1") && !truthTable[truthTable.length - 1][j].equals("1")) {
+              entails = false;
+          }
       }
     }
-    
-    if (overallCounter == remainder.size()) {
-      entails = true;
-    }
-    else {
-      entails = false;
-    }
+    System.out.println(entails);
     return entails;
   }
   
