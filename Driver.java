@@ -23,28 +23,29 @@ public class Driver {
 //      BeliefADT belief = (BeliefADT)new SingleLiteralSentence("!p");
 //      BinarySentence bs = new BinarySentence("!p|!q");
 //      BeliefBaseADT bb = new BeliefBaseADT();
-      //      System.out.println("1 " + bs.getNotFirstLiteral());
-      //      System.out.println("2 " + bs.getFirstLiteral());
-      //      System.out.println("3 " + bs.getNotSecondLiteral());
-      //      System.out.println("4 " + bs.getSecondLiteral());
-      //      System.out.println(bb.uniqueLiteralsHelper(belief, ""));
+//      System.out.println("1 " + bs.getNotFirstLiteral());
+//      System.out.println("2 " + bs.getFirstLiteral());
+//      System.out.println("3 " + bs.getNotSecondLiteral());
+//      System.out.println("4 " + bs.getSecondLiteral());
+//      System.out.println(bb.uniqueLiteralsHelper(belief, ""));
 
-      //      BeliefADT b1 = new BinarySentence("q|r");
-      //      BeliefADT b2 = new SingleLiteralSentence("p");
-      //      bb.add(b1);
-      //      bb.add(b2);
-      //      BeliefRevision br = new BeliefRevision();
-      //      System.out.println(bb.truthTable(belief));
-      //      System.out.println(br.entails(b1, b2, bb.truthTable(belief)));
+//      BeliefADT b1 = new BinarySentence("q|r");
+//      BeliefADT b2 = new SingleLiteralSentence("p");
+//      bb.add(b1);
+//      bb.add(b2);
+//      BeliefRevision br = new BeliefRevision();
+//      System.out.println(bb.truthTable(belief));
+//      System.out.println(br.entails(b1, b2, bb.truthTable(belief)));
 
 
       userInput = scnr.nextLine().trim();
 
-      String[] stringArray = userInput.split("&");
+//      String[] stringArray = userInput.split("&");
 
-      for (String s : stringArray) {
+//      for (String s : stringArray) {
         int numORs = 0;
         int numNOTs = 0;
+        int numANDs = 0;
 
         for(int i=0; i<userInput.length();i++) {
           Character letter = userInput.charAt(i);
@@ -56,30 +57,33 @@ public class Driver {
           if(letter.equals('!')) {
             numNOTs++;
           }
-        }
+          
+          if(letter.equals("&")) {
+            numANDs++;
+          }
+//        }
 
         BeliefADT b;
-        if (numORs == 0) {
+        if (numORs+numANDs == 0) {
           b = new SingleLiteralSentence(userInput);
-        } else if (numORs == 1) {
+        } else if (numORs+numANDs == 1) {
           b = new BinarySentence(userInput);
         } else {
           b = new ThreeLiteralSentence(userInput);
         }
         
+
         BeliefRevision revise = new BeliefRevision();
-           if (beliefBase.contains(b) == false) {
-        BeliefRevision revise = new BeliefRevision();
+        //        if (beliefBase.contains(b) == false) {
         while(!beliefBase.consistencyCheck(b)) {
-        beliefBase.setBeliefBase(revise.contraction(beliefBase, b));
+          beliefBase.setBeliefBase(revise.contraction(beliefBase, b));
         }
-        }
-        
-        //Revision
+        //        }
       }
       
       //Print belief base
       System.out.println("Belief Base: " + beliefBase.toString());
+      System.out.println();
 
       //Error checking for CNF form somehow
     }
