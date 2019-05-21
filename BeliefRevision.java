@@ -48,41 +48,50 @@ public class BeliefRevision {
     return null;
   }
 
-  public boolean entails(BeliefADT belief1, BeliefADT notPhi, String[][] truthTable) {
+  public boolean entails(ArrayList<BeliefADT> remainder, String[][] truthTable) {
 
     boolean entails = false;
-    int i = 0;
-    int belief1index = 0;
-    int notPhiIndex = 0;
-    
-    for (i = 0; i < truthTable.length; i++) {
-        if (belief1.toString().equals(truthTable[i][0])) {
-            belief1index = i;
+    int index = (int)Math.round(Math.log10(truthTable[0].length-1)/Math.log10(2));
+    int[] beliefIndex = new int[remainder.size()];
+
+    for(int i = 0; i < remainder.size(); i++) {
+      for (int j  = index; j < truthTable.length-1; j++) {
+        if (remainder.get(i).toString().equals(truthTable[j][0])) {
+          beliefIndex[i] = j;
         }
-        if (notPhi.toString().equals(truthTable[i][0])) {
-            notPhiIndex = i;
-        }
-    }
-    
-    int counter = 0;  
-    for (i = 1; i < truthTable[0].length; i++) {
-        if (truthTable[belief1index][i].equals("1")) {
-            counter++;
-        }
+      }
     }
 
+
+    int counter = 0; 
     int counter2 = 0;
-    for (i = 1; i < truthTable[0].length; i++) {
-        if (truthTable[notPhiIndex][i].equals("0")) {
-            counter2++;
+    int overallCounter = 0;
+    for(int i = 0; i < beliefIndex.length; i++) {
+      for (int j = 1; j < truthTable[0].length; j++) {
+        if (truthTable[beliefIndex[i]][j].equals("1")) {
+          counter++;
         }
-    }
+      }
 
-    if(counter == counter2) {
-        entails = true;
+      for (i = 1; i < truthTable[0].length; i++) {
+        if (truthTable[truthTable.length-1][i].equals("1")) {
+          counter2++;
+        }
+      }
+
+      if(counter == counter2) {
+        overallCounter++;
+      }
+    }
+    
+    if (overallCounter == remainder.size()) {
+      entails = true;
+    }
+    else {
+      entails = false;
     }
     return entails;
-}
+  }
   
   public ArrayList<BeliefADT> expansion(BeliefBaseADT<BeliefADT> beliefBase, BeliefADT belief) {
     ArrayList<BeliefADT> beliefs = beliefBase.getBeliefBase();
