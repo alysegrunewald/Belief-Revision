@@ -242,7 +242,6 @@ public class BeliefBaseADT<BeliefADT> {
 //   if (newBelief == null) {
 //     beliefBase.remove(newBelief);
 //   }
-
    this.beliefBase.remove(newBelief);
    return truthTable;
   }
@@ -372,7 +371,7 @@ public class BeliefBaseADT<BeliefADT> {
     }     
     if (j > 0) { 
       return true;
-    } else {
+    } else { 
       return false;
     }
   }
