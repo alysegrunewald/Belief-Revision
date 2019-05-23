@@ -248,37 +248,21 @@ public class BeliefBaseADT<BeliefADT> {
   }
   
   public boolean consistencyCheck(BeliefADT newBelief) {
-    
+
     if(beliefBase.isEmpty()) {
       beliefBase.add(newBelief);
       return true;
     }
-    
+
     String uniqueLiterals = "";
     for (BeliefADT b : beliefBase) {
       uniqueLiterals = uniqueLiteralsHelper(b, uniqueLiterals);
     }
     int numUnique = uniqueLiterals.length();
-    
+
     String[][] truthTable = truthTable(newBelief);
-    
+
     //Consistency Check
-//    for(int i = 1; i < truthTable[0].length; i++) {
-//      for(int j = numUnique; j < truthTable.length-1; j++) {
-//        if (truthTable[j][i].equals("1")) {    
-//          int tempKbCounter = 0;
-//          if (truthTable[truthTable.length-1][i].equals("0")) {
-//            tempKbCounter++;
-//          }
-//        }
-//        if (tempKbCounter == beliefBase.size()-1) {
-//          return true;
-//        }
-//      }
-//    }
-    
-//    printTruthTable(truthTable);
-    
     int count1 = 0;
     int count2 = 0;
     for(int i = 1; i < truthTable[0].length; i++) {
@@ -288,7 +272,7 @@ public class BeliefBaseADT<BeliefADT> {
           kbCounter++;
         }
       }
-      if (kbCounter == beliefBase.size()-1) {
+      if (kbCounter == beliefBase.size()) {
         count1++;
         if(truthTable[truthTable.length-1][i].equals("0")) {
           count2++;
@@ -296,7 +280,7 @@ public class BeliefBaseADT<BeliefADT> {
       }
     }
 
-    if (count1 == count2) {
+    if (count1 == count2 && count1!=0 && count2!=0) {
       return false;
     } else {
       return true;
