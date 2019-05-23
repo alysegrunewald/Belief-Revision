@@ -36,20 +36,46 @@ public class BeliefRevision {
     //Arbitrary selection of removal, no intersection of remainder set
   }
 
+  public ArrayList<String[]> generate(String[] beliefs, int r) {
+      ArrayList<String[]> remainders = new ArrayList<String[]>();
+      helper(remainders, beliefs, new String[r], 0, beliefs.length - 1, 0);
+      return remainders;
+  }
+  
+  private void helper(ArrayList<String[]> remainders, String[] beliefs, String data[], int start, int end, int index) {
+      if (index == data.length) {
+          String[] remainder = data.clone();
+          remainders.add(remainder);
+      } else if (start <= end) {
+          data[index] = beliefs[start];
+          helper(remainders, beliefs, data, start + 1, end, index + 1);
+          helper(remainders, beliefs, data, start + 1, end, index);
+      }
+  }
+  
   public ArrayList<ArrayList<String>> remainderSet(BeliefBaseADT beliefBase, BeliefADT newBelief) {
     String[][] truthTable = beliefBase.truthTable(newBelief);
-
-
+    ArrayList<BeliefADT> beliefBaseList = beliefBase.getBeliefBase();
+    ArrayList<String[]> remainderSet = new ArrayList<String[]>();
+    
     //Go through belief base, find all combiniations of what is in the belief base
-
-    //Find inclusion maximal combos of where belief base does not entail new belief
-    //Every subset of B that does not entail phi will be added to remainder set
-
-    //Find a way to ensure remainder set only includes largest subsets of B (inclusion maximal)
-
+    String[] beliefs = new String[beliefBaseList.size()];
+    for (int i = 0; i < beliefs.length; i++) {
+        beliefs[i] = beliefBaseList.get(i).toString();
+    }
+    
+    for (int i = 0; i < beliefs.length; i++) {
+    ArrayList<String[]> remainders = generate(beliefs, i);
+    for (int j = 0; j < remainders.size(); j++) {
+    remainderSet.add(remainders.get(j));
+    }
+    }
+    
+    for (int i = 0; i < remainderSet.size(); i++) {
+        System.out.println(remainderSet.get(i));
+    }
     return null;
   }
-
   public boolean entails(BeliefBaseADT beliefBase, ArrayList<BeliefADT> remainder, BeliefADT phi) {
 
     String[][] truthTable = beliefBase.truthTable(phi);
