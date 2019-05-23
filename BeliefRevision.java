@@ -126,13 +126,20 @@ public class BeliefRevision {
     return beliefs;
   }
 
-  public ArrayList<BeliefADT> contraction(BeliefBaseADT<BeliefADT> beliefBase, BeliefADT belief) {
-    ArrayList<BeliefADT> beliefs = beliefBase.getBeliefBase();
-
-    if(beliefs.contains(belief)) {
-      beliefs.remove(belief);
-    }  
-
-    return beliefs;
-  }
+    public ArrayList<BeliefADT> contraction(BeliefBaseADT<BeliefADT> beliefBase, BeliefADT belief) {
+        ArrayList<BeliefADT> beliefs = beliefBase.getBeliefBase();
+        
+        ArrayList<String[]> remainderSet = remainderSet(beliefBase, belief);
+        String[] removal = selection(remainderSet);
+                
+        for (int i = 0; i < removal.length; i++) {
+            for (int j = 0; j < beliefs.size(); j++) {
+                if (removal[i].equals(beliefs.get(j).toString())) {
+                    beliefs.remove(j);
+                    break;
+                }
+            }       
+        }
+        return beliefs;
+    
 }
