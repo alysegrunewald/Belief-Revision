@@ -71,18 +71,19 @@ public class BeliefRevision {
             }
         }
 
-//        for (int i = 0; i < possibleRemainders.size(); i++) {
-//            for (int j = 0; j < possibleRemainders.get(i).length; j++) {
-//                System.out.print(possibleRemainders.get(i)[j] + ", "); 
+//        for (int i = 0; i < remainderSet.size(); i++) {
+//            for (int j = 0; j < remainderSet.get(i).length; j++) {
+//                System.out.print(remainderSet.get(i)[j] + ", "); 
 //            }
 //            System.out.println();
 //        }
         
 //        ArrayList<String[]> remainderSet = new ArrayList<String[]>();
         for (int i = 0; i < remainderSet.size(); i++) {
-            if (!entails(beliefBase, remainderSet.get(i), newBelief)) {
+            if (entails(beliefBase, remainderSet.get(i), newBelief)) {
 //                remainderSet.add(possibleRemainders.get(i));
                 remainderSet.remove(i);
+                i--;
 
             }
         }
@@ -98,6 +99,7 @@ public class BeliefRevision {
     public boolean entails(BeliefBaseADT beliefBase, String[] remainder, BeliefADT phi) {
 
         String[][] truthTable = beliefBase.truthTable(phi);
+       
 
         int index = (int)Math.round(Math.log10(truthTable[0].length-1)/Math.log10(2));
         int[] beliefIndex = new int[remainder.length];
@@ -115,22 +117,21 @@ public class BeliefRevision {
         for (int i = 1; i < truthTable[0].length; i++) {
             int kbCounter = 0;
             for (int j = 0; j < beliefIndex.length; j++) {
-                if (truthTable[beliefIndex[j]].equals("1")) {
+                if (truthTable[beliefIndex[j]][i].equals("1")) {
                     kbCounter++;
                 }
             }
-            if (kbCounter == remainder.length){
+            if (kbCounter == remainder.length && truthTable[truthTable.length-1][i].equals("1")){
                 count1++;
-                if(truthTable[truthTable.length-1][i].equals("1")) {
-                    count2++;
-                }
             }
         }
 
         //    beliefBase.printTruthTable(truthTable);
-        if(count1 == count2 && count1 != 0 && count2 != 0) {
+        if(count1 >= 1) {
+            System.out.println("TRUE");
             return true;
         } else {
+            System.out.println("FALSE");
             return false;
         }
     }
