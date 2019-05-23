@@ -130,7 +130,7 @@ public class BeliefRevision {
     ArrayList<BeliefADT> beliefs = beliefBase.getBeliefBase();
 
     if(beliefs.contains(belief)) {
-      beliefs.add(belief);
+      beliefs.remove(belief);
     }  
 
     return beliefs;
