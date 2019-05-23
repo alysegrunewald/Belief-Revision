@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 
 public class BeliefRevision {
@@ -57,7 +56,7 @@ public class BeliefRevision {
     public ArrayList<String[]> remainderSet(BeliefBaseADT beliefBase, BeliefADT newBelief) {
         //String[][] truthTable = beliefBase.truthTable(newBelief);
         ArrayList<BeliefADT> beliefBaseList = beliefBase.getBeliefBase();
-        ArrayList<String[]> possibleRemainders = new ArrayList<String[]>();
+        ArrayList<String[]> remainderSet = new ArrayList<String[]>();
 
         //Go through belief base, find all combiniations of what is in the belief base
         String[] beliefs = new String[beliefBaseList.size()];
@@ -68,24 +67,32 @@ public class BeliefRevision {
         for (int i = 0; i < beliefs.length; i++) {
             ArrayList<String[]> remainders = generate(beliefs, i);
             for (int j = 0; j < remainders.size(); j++) {
-                possibleRemainders.add(remainders.get(j));
+                remainderSet.add(remainders.get(j));
             }
         }
 
-        for (int i = 0; i < possibleRemainders.size(); i++) {
-            for (int j = 0; j < possibleRemainders.get(i).length; j++) {
-                System.out.print(possibleRemainders.get(i)[j] + ", "); 
+//        for (int i = 0; i < possibleRemainders.size(); i++) {
+//            for (int j = 0; j < possibleRemainders.get(i).length; j++) {
+//                System.out.print(possibleRemainders.get(i)[j] + ", "); 
+//            }
+//            System.out.println();
+//        }
+        
+//        ArrayList<String[]> remainderSet = new ArrayList<String[]>();
+        for (int i = 0; i < remainderSet.size(); i++) {
+            if (!entails(beliefBase, remainderSet.get(i), newBelief)) {
+//                remainderSet.add(possibleRemainders.get(i));
+                remainderSet.remove(i);
+
+            }
+        }
+        for (int i = 0; i < remainderSet.size(); i++) {
+            for (int j = 0; j < remainderSet.get(i).length; j++) {
+                System.out.print(remainderSet.get(i)[j] + ", "); 
             }
             System.out.println();
         }
-        
-        ArrayList<String[]> remainderSet = new ArrayList<String[]>();
-        for (int i = 0; i < possibleRemainders.size(); i++) {
-            if (!entails(beliefBase, possibleRemainders.get(i), newBelief)) {
-                remainderSet.add(possibleRemainders.get(i));
-            }
-        }
-        return possibleRemainders;
+        return remainderSet;
     }
     
     public boolean entails(BeliefBaseADT beliefBase, String[] remainder, BeliefADT phi) {
