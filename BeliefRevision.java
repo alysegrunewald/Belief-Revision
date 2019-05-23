@@ -31,9 +31,10 @@ public class BeliefRevision {
   //    }
   //  }
 
-  public void selection(ArrayList<String> remainderSet) {
+  public String[] selection(ArrayList<String[]> remainderSet) {
     //Maxichoice or full meet contraction
     //Arbitrary selection of removal, no intersection of remainder set
+    return null;
   }
 
   public ArrayList<String[]> generate(String[] beliefs, int r) {
