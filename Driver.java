@@ -74,12 +74,12 @@ public class Driver {
         
 
         BeliefRevision revise = new BeliefRevision();
-        //        if (beliefBase.contains(b) == false) {
-        while(!beliefBase.consistencyCheck(b)) {
-          beliefBase.setBeliefBase(revise.contraction(beliefBase, b));
+
+        if(!beliefBase.consistencyCheck(b)) {
+            beliefBase.setBeliefBase(revise.contraction(beliefBase, b));
         }
-        //        }
-      }
+        revise.expansion(beliefBase, b);
+        }
       
       //Print belief base
       System.out.println("Belief Base: " + beliefBase.toString());
