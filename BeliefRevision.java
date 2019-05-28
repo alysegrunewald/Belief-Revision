@@ -80,7 +80,7 @@ public class BeliefRevision {
         
 //        ArrayList<String[]> remainderSet = new ArrayList<String[]>();
         for (int i = 0; i < remainderSet.size(); i++) {
-            if (entails(beliefBase, remainderSet.get(i), newBelief)) {
+            if (implies(beliefBase, remainderSet.get(i), newBelief)) {
 //                remainderSet.add(possibleRemainders.get(i));
                 remainderSet.remove(i);
                 i--;
@@ -96,7 +96,7 @@ public class BeliefRevision {
         return remainderSet;
     }
     
-    public boolean entails(BeliefBaseADT beliefBase, String[] remainder, BeliefADT phi) {
+    public boolean implies(BeliefBaseADT beliefBase, String[] remainder, BeliefADT phi) {
 
         String[][] truthTable = beliefBase.truthTable(phi);
        
