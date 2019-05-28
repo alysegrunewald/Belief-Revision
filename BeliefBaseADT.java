@@ -266,7 +266,7 @@ public class BeliefBaseADT<BeliefADT> {
     int count2 = 0;
     for(int i = 1; i < truthTable[0].length; i++) {
       int kbCounter = 0;
-      for (int j = numUnique; j < truthTable.length;j++) {
+      for (int j = numUnique; j < truthTable.length - 1;j++) {
         if (truthTable[j][i].equals("1")) {
           kbCounter++;
         }
@@ -280,8 +280,12 @@ public class BeliefBaseADT<BeliefADT> {
     }
 
     if (count1 == count2 && count1!=0 && count2!=0) {
+      printTruthTable(truthTable);
+      System.out.println("false");
       return false;
     } else {
+        printTruthTable(truthTable);
+        System.out.println("true");
       return true;
     }
   }
