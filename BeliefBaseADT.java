@@ -280,12 +280,8 @@ public class BeliefBaseADT<BeliefADT> {
     }
 
     if (count1 == count2 && count1!=0 && count2!=0) {
-      printTruthTable(truthTable);
-      System.out.println("false");
       return false;
     } else {
-        printTruthTable(truthTable);
-        System.out.println("true");
       return true;
     }
   }
@@ -356,6 +352,11 @@ public class BeliefBaseADT<BeliefADT> {
     return;
   }
   
+  public void remove (BeliefADT belief) {
+    this.beliefBase.remove(belief);
+    return;
+  }
+  
   public ArrayList<BeliefADT> getBeliefBase() {
     return this.beliefBase;
   }
@@ -380,3 +381,4 @@ public class BeliefBaseADT<BeliefADT> {
     }
   }
 }
+
