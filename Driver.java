@@ -11,39 +11,23 @@ public class Driver {
 
     Scanner scnr = new Scanner(System.in);
     String userInput = null;
-    
+
     BeliefBaseADT<BeliefADT> beliefBase = new BeliefBaseADT();
-    while (userInput != "END") {
-      System.out.println("Please enter a new belief in Conjunctive Normal Form, using the following logic symbols.");
-      System.out.println("  Lowercase letter(i.e. p,q,r) : Literal");
-      System.out.println("  ! : NOT");
-      System.out.println("  | : OR");
-      System.out.println("  & : AND");
-      System.out.println("Or enter the command 'END' to see the final belief base.");
+    outerloop:
+      while (true) {
+        System.out.println("Please enter a new belief in Conjunctive Normal Form, using the following logic symbols.");
+        System.out.println("  Lowercase letter(i.e. p,q,r) : Literal");
+        System.out.println("  ! : NOT");
+        System.out.println("  | : OR");
+        System.out.println("  & : AND");
+        System.out.println("Or enter the command 'END' to see the final belief base.");
 
-//      BeliefADT belief = (BeliefADT)new SingleLiteralSentence("!p");
-//      BinarySentence bs = new BinarySentence("!p|!q");
-//      BeliefBaseADT bb = new BeliefBaseADT();
-//      System.out.println("1 " + bs.getNotFirstLiteral());
-//      System.out.println("2 " + bs.getFirstLiteral());
-//      System.out.println("3 " + bs.getNotSecondLiteral());
-//      System.out.println("4 " + bs.getSecondLiteral());
-//      System.out.println(bb.uniqueLiteralsHelper(belief, ""));
+        userInput = scnr.nextLine().trim();
 
-//      BeliefADT b1 = new BinarySentence("q|r");
-//      BeliefADT b2 = new SingleLiteralSentence("p");
-//      bb.add(b1);
-//      bb.add(b2);
-//      BeliefRevision br = new BeliefRevision();
-//      System.out.println(bb.truthTable(belief));
-//      System.out.println(br.entails(b1, b2, bb.truthTable(belief)));
+        if (userInput.equals("END")) {
+          break;
+        }
 
-
-      userInput = scnr.nextLine().trim();
-
-//      String[] stringArray = userInput.split("&");
-
-//      for (String s : stringArray) {
         int numORs = 0;
         int numNOTs = 0;
         int numANDs = 0;
@@ -53,41 +37,54 @@ public class Driver {
 
           if(letter.equals('|')) {
             numORs++;
-          }
-
-          if(letter.equals('!')) {
+          } else if(letter.equals('!')) {
             numNOTs++;
-          }
-          
-          if(letter.equals("&")) {
+          } else if (letter.equals('&')) {
             numANDs++;
+          } else if (Character.isLetter(letter)) {
+            continue;
+          } else {
+            System.out.println();
+            System.out.println("*Please enter a valid propositional logic formula*\n");
+            continue outerloop;
           }
-       }
-
-        BeliefADT b;
-        if (numORs+numANDs == 0) {
-          b = new SingleLiteralSentence(userInput);
-        } else if (numORs+numANDs == 1) {
-          b = new BinarySentence(userInput);
-        } else {
-          b = new ThreeLiteralSentence(userInput);
         }
         
-
+        String[] stringArray = userInput.split("\\&");
         
-        BeliefRevision revise = new BeliefRevision();
+        for (String s : stringArray) {
+          BeliefADT b;
+          if (numORs == 0) {
+            b = new SingleLiteralSentence(s);
+          } else if (numORs == 1) {
+            b = new BinarySentence(s);
+          } else if (numORs == 2) {
+            b = new ThreeLiteralSentence(s);
+          } else {
+            System.out.println();
+            System.out.println("*Please enter a valid propositional logic formula*\n");
+            continue outerloop;
+          }
 
-        if(!beliefBase.consistencyCheck(b)) {
-            beliefBase.setBeliefBase(revise.contraction(beliefBase, b));
+          BeliefRevision revise = new BeliefRevision();
+
+          if(!beliefBase.consistencyCheck(b)) {
+            revise.contraction(beliefBase, b);
+          }
+          revise.expansion(beliefBase, b);
         }
-        revise.expansion(beliefBase, b);
 
-      
-      //Print belief base
-      System.out.println("Belief Base: " + beliefBase.toString());
-      System.out.println();
+        //Print belief base
+        System.out.println("Belief Base: " + beliefBase.toString());
+        System.out.println();
 
-      //Error checking for CNF form somehow
-    }
+        //Error checking for CNF form somehow
+      }
+
+    System.out.println("Final Belief Base: " + beliefBase.toString());
+    System.out.println("--------------------------------------------------------\n");
+    System.out.print("Thank you for using the Belief Revision Agent!");
   }
 }
+
+
